@@ -36,7 +36,7 @@ const fetchImageData = async (
   }
 };
 
-const fetchGifSubreddits = async (): Promise<string[] | null> => {
+const fetchGifSubreddits = async (): Promise<string[]> => {
   const url = "https://www.reddit.com/r/multihub/wiki/gifs.json";
 
   try {
@@ -48,7 +48,7 @@ const fetchGifSubreddits = async (): Promise<string[] | null> => {
     return subreddits;
   } catch (err) {
     console.error(err);
-    return null;
+    return [];
   }
 };
 const fetchImageSubreddits = async () => {

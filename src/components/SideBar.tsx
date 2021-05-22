@@ -3,10 +3,11 @@ import { slide as Menu } from "react-burger-menu";
 import { FaRedditSquare } from "react-icons/fa";
 import MultiListItem from "./MultiListItem";
 import { Container, Row } from "react-bootstrap";
-import { useAppSelector } from "../redux/reduxHooks";
-import { MultiListTypes } from "../interfaces/MainInterfaces";
+import { useAppSelector, useAppDispatch } from "../redux/reduxHooks";
+import { Category } from "../interfaces/MainInterfaces";
 import { FaHeart, FaCamera } from "react-icons/fa";
 import { BiHappyAlt } from "react-icons/bi";
+import { AiOutlineFileGif } from "react-icons/ai";
 
 import "../css/sideBar.css";
 
@@ -15,11 +16,14 @@ const dark = "#3e4349";
 const grey = "#dadada";
 
 const SideBar = () => {
-  const { photography, funny, favorites } = useAppSelector(
+  const { photography, funny, favorites, gifs } = useAppSelector(
     (state) => state.subredditData
   );
+  const sendName = (subreddit: string) => {
+    console.log(subreddit);
+  };
 
-  const catagories = [
+  const categories = [
     {
       title: "favorites",
       list: favorites,
@@ -27,16 +31,22 @@ const SideBar = () => {
       eventKey: "0",
     },
     {
+      title: "gifs",
+      list: gifs,
+      icon: <AiOutlineFileGif color={green} />,
+      eventKey: "1",
+    },
+    {
       title: "photography",
       list: photography,
       icon: <FaCamera color={green} />,
-      eventKey: "1",
+      eventKey: "2",
     },
     {
       title: "funny",
       list: funny,
       icon: <BiHappyAlt color={green} />,
-      eventKey: "2",
+      eventKey: "3",
     },
   ];
 
@@ -52,14 +62,15 @@ const SideBar = () => {
           </Row>
 
           <div className="multi-layer-list">
-            {catagories.map(
-              (catagory: MultiListTypes): JSX.Element => (
+            {categories.map(
+              (category: Category): JSX.Element => (
                 <MultiListItem
-                  key={catagory.title}
-                  title={catagory.title}
-                  list={catagory.list}
-                  icon={catagory.icon}
-                  eventKey={catagory.eventKey}
+                  key={category.title}
+                  title={category.title}
+                  list={category.list}
+                  icon={category.icon}
+                  eventKey={category.eventKey}
+                  sendName={sendName}
                 />
               )
             )}

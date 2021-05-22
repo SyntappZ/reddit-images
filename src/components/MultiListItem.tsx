@@ -9,7 +9,7 @@ import {
   useAccordionToggle,
   ListGroup,
 } from "react-bootstrap";
-import { ListTitleProps, MultiListTypes } from "../interfaces/MainInterfaces";
+import { ListTitleProps, MultiListProps } from "../interfaces/MainInterfaces";
 import { FaHeart, FaChevronDown, FaCamera } from "react-icons/fa";
 import '../css/MultiListItem.css'
 import { useDispatch, useSelector } from "react-redux";
@@ -17,11 +17,9 @@ const green = "#17a2b8";
 const dark = "#3e4349";
 const grey = "#dadada";
 
-const MultiListItem = ({ title, list, icon, eventKey }: MultiListTypes) => {
+const MultiListItem = ({ title, list, icon, eventKey, sendName }: MultiListProps) => {
  
-  const sendName = (subreddit: string) => {
-    console.log(subreddit);
-  };
+ 
   return (
     <Accordion>
       <Card

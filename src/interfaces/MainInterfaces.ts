@@ -19,7 +19,13 @@ export interface ListTitleProps {
     icon: JSX.Element;
 }
 
-export interface MultiListTypes extends ListTitleProps {
-    list: string[]
+export interface Category extends ListTitleProps {
+    list: string[];
+    
 }
+export interface MultiListProps extends Category {
+    sendName: Function;
+}
+
+
 
