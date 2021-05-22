@@ -1,25 +1,20 @@
-import React, { useState, useRef } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Accordion,
-  Button,
-  useAccordionToggle,
-  ListGroup,
-} from "react-bootstrap";
+import React, { useState } from "react";
+import { Card, Accordion, useAccordionToggle } from "react-bootstrap";
 import { ListTitleProps, MultiListProps } from "../interfaces/MainInterfaces";
-import { FaHeart, FaChevronDown, FaCamera } from "react-icons/fa";
-import '../css/MultiListItem.css'
-import { useDispatch, useSelector } from "react-redux";
+import { FaChevronDown } from "react-icons/fa";
+import "../css/MultiListItem.css";
+
 const green = "#17a2b8";
 const dark = "#3e4349";
 const grey = "#dadada";
 
-const MultiListItem = ({ title, list, icon, eventKey, sendName }: MultiListProps) => {
- 
- 
+const MultiListItem = ({
+  title,
+  list,
+  icon,
+  eventKey,
+  sendName,
+}: MultiListProps) => {
   return (
     <Accordion>
       <Card
@@ -56,16 +51,17 @@ const ListTitle = ({ eventKey, title, icon }: ListTitleProps) => {
     degrees ? setDegrees(0) : setDegrees(-90);
   });
 
-  
-
   return (
     <div className="top-list" onClick={decoratedOnClick}>
-      <div className="top-list-wrap" >
+      <div className="top-list-wrap">
         {icon}
         <h5>{title}</h5>
       </div>
-      <div className="down-icon-wrap" >
-        <FaChevronDown className="down-icon" style={{transform: `rotate(${degrees}deg)`}} />
+      <div className="down-icon-wrap">
+        <FaChevronDown
+          className="down-icon"
+          style={{ transform: `rotate(${degrees}deg)` }}
+        />
       </div>
     </div>
   );

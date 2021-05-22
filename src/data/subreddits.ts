@@ -93,8 +93,6 @@ const funny = [
     "/r/TrollXChromosomes",
     "/r/TrollingAnimals",
     "/r/trollscience",
-    
-   
     "/r/troll",
     "/r/trolling",
     "/r/TrollClop",
@@ -182,7 +180,6 @@ const funny = [
     "/r/gaben",
     "/r/inglip",
     "/r/Shaskel",
-    
     "/r/gropagasgonewild",
     "/r/sacrilicious",
     "/r/Atraxi",
@@ -221,7 +218,6 @@ const funny = [
     "/r/clownviolence",
     "/r/FunnyStockPics",
     "/r/FunnyCommercials",
-  
     "/r/gibberish",
     "/r/offbeat",
     "/r/wtf",
@@ -243,7 +239,6 @@ const funny = [
     "/r/yahooanswers",
     "/r/youtubehaiku",
     "/r/TheStopGirl",
-  
     "/r/Vogonpoetrycircle",
     "/r/toasterrights",
     "/r/myevilplan",
@@ -272,7 +267,6 @@ const funny = [
     "/r/merica",
     "/r/Ducttaped",
     "/r/fuckingphilosophy",
-   
     "/r/Punny",
     "/r/pun",
     "/r/puns",

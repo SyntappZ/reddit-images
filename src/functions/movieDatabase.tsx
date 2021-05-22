@@ -1,25 +1,14 @@
 import { ChildData, Child } from "../interfaces/HttpDataInterfaces";
 import { RedditImageArray, ImageObject } from "../interfaces/MainInterfaces";
 
-class RedditImages {
-  after: string;
-  images: ImageObject[];
-
-  constructor(after: string, images: ImageObject[]) {
-    this.after = after;
-    this.images = images;
-  }
-}
-
-const fetchImageData = async (
-  subreddit: string
-): Promise<RedditImageArray | null> => {
-  const url = `https://www.reddit.com/r/${subreddit}.json`;
+const fetchImageData = async (subreddit: string, after: string): Promise<RedditImageArray> => {
+  const url = `https://www.reddit.com${subreddit}.json?after=${after}`;
   try {
     const response = await fetch(url);
     const { data } = await response.json();
+    console.log(data)
     const after = data.after;
-    const images = data.children.map((item: Child) => {
+    const images = data.children.map((item: Child): ImageObject => {
       return {
         title: item.data.title,
         thumbnail: item.data.thumbnail,
@@ -28,11 +17,14 @@ const fetchImageData = async (
         subreddit: item.data.subreddit,
       };
     });
-    const imagesData = new RedditImages(after, images);
+    const imagesData: RedditImageArray = { after: after, images: images };
     return imagesData;
   } catch (err) {
     console.error(err);
-    return null;
+    return {
+      after: "",
+      images: [],
+    };
   }
 };
 
@@ -52,18 +44,18 @@ const fetchGifSubreddits = async (): Promise<string[]> => {
   }
 };
 const fetchImageSubreddits = async () => {
-  const url = "https://www.reddit.com/r/redditlists/comments/128ayc/list_of_funny_subreddits.json"
+  const url =
+    "https://www.reddit.com/r/redditlists/comments/128ayc/list_of_funny_subreddits.json";
 
   try {
     const response = await fetch(url);
     const data = await response.json();
 
-    const str = data[0].data.children[0].data.selftext
-    
+    const str = data[0].data.children[0].data.selftext;
+
     // const sections = str.split('\\n\\nComics:')
-     const subreddits = str.match(/\/r\/\w+/g);
-     console.log(subreddits)
-    
+    const subreddits = str.match(/\/r\/\w+/g);
+    console.log(subreddits);
   } catch (err) {
     console.error(err);
     return null;

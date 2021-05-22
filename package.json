@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-burger-menu": "^2.8.0"
+    "@types/react-burger-menu": "^2.8.0",
+    "@types/react-router-dom": "^5.1.7"
   }
 }

@@ -1,0 +1,20 @@
+.title-container {
+  height: 100px;
+  padding: 0 200px;
+}
+
+.current-subreddit {
+    height: 100px;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+}
+
+.recent-list {
+    height: 100px;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}

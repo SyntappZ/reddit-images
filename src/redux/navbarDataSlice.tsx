@@ -1,7 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { subreddits } from "../data/subreddits";
 import { fetchGifSubreddits } from "../functions/movieDatabase";
-import { SubredditDataState } from "../interfaces/reduxInterfaces";
+import { removeDuplicates } from "../functions/converterFunctions";
+import { NavbarDataState } from "../interfaces/ReduxInterfaces";
+
+
 
 export const fetchSubreddits = createAsyncThunk<string[]>(
   "subreddits/fetchSubreddits",
@@ -10,31 +13,24 @@ export const fetchSubreddits = createAsyncThunk<string[]>(
     return response;
   }
 );
-export const subredditDataSlice = createSlice({
-  name: "subredditData",
+export const navbarDataSlice = createSlice({
+  name: "navbarData",
   initialState: {
     photography: subreddits.photography,
     funny: subreddits.funny,
     gifs: [],
     favorites: [],
-  } as SubredditDataState,
-  reducers: {
-    
-  },
+    recent: [],
+  } as NavbarDataState,
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchSubreddits.fulfilled, (state, action) => {
-      state.gifs = action.payload
+      state.gifs = removeDuplicates(action.payload);
     });
   },
 });
 
-
-
-
-
-
-
 // Action creators are generated for each case reducer function
-export const { } = subredditDataSlice.actions;
+export const {} = navbarDataSlice.actions;
 
-export default subredditDataSlice.reducer;
+export default navbarDataSlice.reducer;

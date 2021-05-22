@@ -9,5 +9,11 @@ body {
   background: var(--dark);
 }
 
+.main-container {
+  padding-top: 88px;
+}
+
+
+
 
 

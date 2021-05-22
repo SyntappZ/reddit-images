@@ -1,9 +1,11 @@
 import { createSlice, configureStore, } from '@reduxjs/toolkit'
-import subredditDataSlice from './subredditDataSlice'
+import subredditDataSlice from './navbarDataSlice'
+import redditImagesSlice from './redditImagesSlice'
 
 const store = configureStore({
     reducer: {
-        subredditData: subredditDataSlice
+        subredditData: subredditDataSlice,
+        redditImages: redditImagesSlice
     }
 })
 

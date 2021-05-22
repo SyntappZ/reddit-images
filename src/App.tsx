@@ -1,27 +1,40 @@
 import React, { useEffect } from "react";
 import NavBar from "./components/NavBar";
-import ImagePage from "./components/ImagesPage";
+import Router from "./router/Router";
 import SideBar from "./components/SideBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
-import { fetchSubreddits } from "./redux/subredditDataSlice";
-import { useAppDispatch } from "./redux/reduxHooks";
+import { BrowserRouter } from "react-router-dom";
+import TitleContainer from "./components/TitleContainer";
+import { fetchSubreddits } from "./redux/navbarDataSlice";
+import { fetchImages } from "./redux/redditImagesSlice";
+import { useAppDispatch, useAppSelector } from "./redux/reduxHooks";
+import { SearchObject } from "./interfaces/ReduxInterfaces";
 
 function App() {
   const dispatch = useAppDispatch();
-
+  const { after } = useAppSelector((state) => state.redditImages);
   const fetchNavbarLists = () => {
+    const searchObject: SearchObject = {
+      subreddit: "/r/porngifs",
+      after: after,
+    };
     dispatch(fetchSubreddits());
+    //  dispatch(fetchImages(searchObject))
   };
   useEffect(() => {
     fetchNavbarLists();
   }, []);
   return (
     <div className="App">
-      <NavBar />
-      <SideBar />
-      <ImagePage />
+      <BrowserRouter>
+        <NavBar />
+        <div className="main-container">
+          <SideBar />
+          <TitleContainer />
+          <Router />
+        </div>
+      </BrowserRouter>
     </div>
   );
 }
