@@ -1,0 +1,39 @@
+.top-list {
+  width: 170px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.top-list-wrap {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+}
+
+.top-list h5 {
+  text-transform: capitalize;
+  margin: 0;
+  padding-left: 10px;
+}
+
+.list-body {
+  width: 100%;
+  padding-left: 20px;
+}
+
+.down-icon {
+  transition: 0.4s;
+}
+
+.reddit-list-item {
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.reddit-list-item:hover {
+  color: var(--green);
+}

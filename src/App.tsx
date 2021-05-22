@@ -1,16 +1,16 @@
 import React from "react";
-import Nav from "./components/Nav";
-import FigherScreen from "./components/ImagesPage";
-
+import NavBar from "./components/NavBar";
+import ImagePage from "./components/ImagesPage";
+import SideBar from "./components/SideBar";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <Nav />
-      <div className="container">
-        <FigherScreen />
-      </div>
+      <NavBar />
+      <SideBar />
+      <ImagePage />
     </div>
   );
 }

@@ -1,0 +1,76 @@
+import React, { useState, useRef } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Accordion,
+  Button,
+  useAccordionToggle,
+  ListGroup,
+} from "react-bootstrap";
+import { ListTitleProps, MultiListTypes } from "../interfaces/MainInterfaces";
+import { FaHeart, FaChevronDown, FaCamera } from "react-icons/fa";
+import '../css/MultiListItem.css'
+import { useDispatch, useSelector } from "react-redux";
+const green = "#17a2b8";
+const dark = "#3e4349";
+const grey = "#dadada";
+
+const MultiListItem = ({ title, list, icon, eventKey }: MultiListTypes) => {
+ 
+  const sendName = (subreddit: string) => {
+    console.log(subreddit);
+  };
+  return (
+    <Accordion>
+      <Card
+        style={{ backgroundColor: dark, borderWidth: 0 }}
+        className="text-white"
+      >
+        <Card.Header>
+          <ListTitle eventKey={eventKey} title={title} icon={icon} />
+        </Card.Header>
+        <Accordion.Collapse eventKey={eventKey}>
+          <Card.Body style={{ backgroundColor: dark }}>
+            <div className="list-body">
+              {list.map((subreddit: string) => (
+                <p
+                  key={subreddit}
+                  className="reddit-list-item"
+                  onClick={() => sendName(subreddit)}
+                >
+                  {subreddit}
+                </p>
+              ))}
+            </div>
+          </Card.Body>
+        </Accordion.Collapse>
+      </Card>
+    </Accordion>
+  );
+};
+
+const ListTitle = ({ eventKey, title, icon }: ListTitleProps) => {
+  const [degrees, setDegrees] = useState<number>(-90);
+
+  const decoratedOnClick = useAccordionToggle(eventKey, () => {
+    degrees ? setDegrees(0) : setDegrees(-90);
+  });
+
+  
+
+  return (
+    <div className="top-list" onClick={decoratedOnClick}>
+      <div className="top-list-wrap" >
+        {icon}
+        <h5>{title}</h5>
+      </div>
+      <div className="down-icon-wrap" >
+        <FaChevronDown className="down-icon" style={{transform: `rotate(${degrees}deg)`}} />
+      </div>
+    </div>
+  );
+};
+
+export default MultiListItem;

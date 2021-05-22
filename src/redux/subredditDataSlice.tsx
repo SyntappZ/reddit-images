@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { subreddits } from "../data/subreddits";
-export const subredditData = createSlice({
-  name: "subredditData",
+export const subredditDataSlice = createSlice({
+  name: "subredditDataSlice",
   initialState: {
     photography: subreddits.photography,
     funny: subreddits.funny,
     gifs: [],
+    favorites: []
   },
   reducers: {
     addGifData: (state, action) => {},
@@ -14,6 +15,6 @@ export const subredditData = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addGifData } = subredditData.actions;
+export const { addGifData } = subredditDataSlice.actions;
 
-export default subredditData.reducer;
+export default subredditDataSlice.reducer;

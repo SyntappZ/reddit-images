@@ -93,8 +93,8 @@ const funny = [
     "/r/TrollXChromosomes",
     "/r/TrollingAnimals",
     "/r/trollscience",
-    "/r/Trollers",
-    "/r/TrollFeminists",
+    
+   
     "/r/troll",
     "/r/trolling",
     "/r/TrollClop",
@@ -182,7 +182,7 @@ const funny = [
     "/r/gaben",
     "/r/inglip",
     "/r/Shaskel",
-    "/r/Trathira",
+    
     "/r/gropagasgonewild",
     "/r/sacrilicious",
     "/r/Atraxi",
@@ -221,7 +221,7 @@ const funny = [
     "/r/clownviolence",
     "/r/FunnyStockPics",
     "/r/FunnyCommercials",
-    "/r/wheredidthesodago",
+  
     "/r/gibberish",
     "/r/offbeat",
     "/r/wtf",
@@ -243,7 +243,7 @@ const funny = [
     "/r/yahooanswers",
     "/r/youtubehaiku",
     "/r/TheStopGirl",
-    "/r/Vogonpoetrycircle",
+  
     "/r/Vogonpoetrycircle",
     "/r/toasterrights",
     "/r/myevilplan",
@@ -269,11 +269,10 @@ const funny = [
     "/r/thingsmykidsaid",
     "/r/FunnyAndIntelligent",
     "/r/Karmanautbait",
-    "/r/spacecop",
     "/r/merica",
     "/r/Ducttaped",
     "/r/fuckingphilosophy",
-    "/r/fruitunion",
+   
     "/r/Punny",
     "/r/pun",
     "/r/puns",
@@ -284,8 +283,8 @@ const funny = [
 
 
 const subreddits = {
-    photography: photography.match(/\/r\/\w+/g),
-    funny: funny
+    photography: photography.match(/\/r\/\w+/g) as string[],
+    funny: funny as string[]
 }
 
 
