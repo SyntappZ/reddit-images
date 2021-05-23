@@ -6,24 +6,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import TitleContainer from "./components/TitleContainer";
-import { fetchSubreddits } from "./redux/navbarDataSlice";
+
 import { fetchImages } from "./redux/redditImagesSlice";
-import { useAppDispatch, useAppSelector } from "./redux/reduxHooks";
-import { SearchObject } from "./interfaces/ReduxInterfaces";
+import { useAppDispatch } from "./redux/reduxHooks";
 
 function App() {
   const dispatch = useAppDispatch();
-  const { after } = useAppSelector((state) => state.redditImages);
-  const fetchNavbarLists = () => {
-    const searchObject: SearchObject = {
-      subreddit: "/r/pics",
-      after: after,
-    };
-    dispatch(fetchSubreddits());
-    //  dispatch(fetchImages(searchObject))
+
+  const fetchDefaultImages = () => {
+    dispatch(fetchImages("MostBeautiful"));
   };
   useEffect(() => {
-    fetchNavbarLists();
+    fetchDefaultImages();
   }, []);
   return (
     <div className="App">

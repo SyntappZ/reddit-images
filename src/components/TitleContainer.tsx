@@ -5,14 +5,15 @@ import "../css/titleContainer.css";
 import { useAppSelector } from "../redux/reduxHooks";
 
 const TitleContainer = () => {
-  const {currentSubreddit} = useAppSelector((state) => state.redditImages)
+  const { currentSubreddit, images } = useAppSelector((state) => state.redditImages);
   return (
     <div className="title-container">
       <Container fluid>
         <Row>
           <Col xs={6} md={4}>
             <div className="current-subreddit">
-              <h5>{currentSubreddit}</h5>
+              <h5>r/{currentSubreddit}</h5>
+              {/* <p>{images.length} Images</p> */}
             </div>
           </Col>
           <Col xs={12} md={8}>

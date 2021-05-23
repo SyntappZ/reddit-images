@@ -6,12 +6,14 @@ const fetchImageData = async (
   after: string
 ): Promise<RedditImageArray> => {
   try {
-    if (subreddit == "/r/") throw "empty";
+    console.log(subreddit);
+    if (!subreddit) throw "empty";
 
-    const url: string = `https://www.reddit.com${subreddit}.json?after=${after}`;
+    const url: string = `https://www.reddit.com/r/${subreddit}.json?limit=100&after=${after}`;
     const response = await fetch(url);
     const { data } = await response.json();
-   
+    console.log(data);
+
     const afterString = data.after;
     const images = data.children.map((item: Child): ImageObject => {
       return {
@@ -20,22 +22,39 @@ const fetchImageData = async (
         url: item.data.url,
         permalink: item.data.permalink,
         subreddit: item.data.subreddit,
-        id: item.data.id
+        subredditId: item.data.subreddit_id,
+        id: item.data.id,
       };
     });
-    const imagesData: RedditImageArray = {
-      after: afterString,
-      images: images,
-      errorMessage: "",
-    };
-    return imagesData;
+
+    if (images.length > 0) {
+      const imagesData: RedditImageArray = {
+        after: afterString,
+        images: images,
+        subredditId: images[0].subredditId,
+        subreddit: images[0].subreddit,
+        errorMessage: "",
+      };
+      return imagesData;
+    } else {
+      return {
+        after: "",
+        images: [],
+        subredditId: "",
+        subreddit: "",
+        errorMessage: "No images found.",
+      };
+    }
   } catch (err) {
     console.log(err);
-    const message = err === "empty" ? "Search is empty." : "Not a valid Subreddit.";
+    const message =
+      err === "empty" ? "Search is empty." : "Not a valid Subreddit.";
 
     return {
       after: "",
       images: [],
+      subredditId: "",
+      subreddit: "",
       errorMessage: message,
     };
   }
@@ -44,17 +63,18 @@ const fetchImageData = async (
 const fetchGifSubreddits = async (): Promise<string[]> => {
   const url = "https://www.reddit.com/r/multihub/wiki/gifs.json";
 
-  try {
-    const response = await fetch(url);
-    const { data } = await response.json();
-    const str = data.content_md;
-    const removeAdultContent = str.slice(0, str.indexOf("#NSFW"));
-    const subreddits = removeAdultContent.match(/\/r\/\w+/g);
-    return subreddits;
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
+  // try {
+  //   const response = await fetch(url);
+  //   const { data } = await response.json();
+  //   const str = data.content_md;
+  //   const removeAdultContent = str.slice(0, str.indexOf("#NSFW"));
+  //   const subreddits = removeAdultContent.match(/\/r\/\w+/g);
+  //   return subreddits;
+  // } catch (err) {
+  //   console.error(err);
+  //   return [];
+  // }
+  return [];
 };
 const fetchImageSubreddits = async () => {
   const url =

@@ -3,7 +3,7 @@ import { ImageObject } from './MainInterfaces'
 
 export interface NavbarDataState {
   photography: string[];
-  funny: string[];
+  memes: string[];
   gifs: string[];
   favorites: string[];
   recent: string[];
@@ -15,9 +15,7 @@ export interface RedditImagesState {
   gifs: ImageObject[];
   favorites: ImageObject[];
   currentSubreddit: string;
+  currentSubredditId: string;
+  fetchingImages: boolean;
 }
 
-export interface SearchObject {
-  subreddit: string,
-  after: string
-}

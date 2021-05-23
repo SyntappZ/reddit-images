@@ -33,7 +33,7 @@ const MultiListItem = ({
                   className="reddit-list-item"
                   onClick={() => sendName(subreddit)}
                 >
-                  {subreddit}
+                  r/{subreddit}
                 </p>
               ))}
             </div>

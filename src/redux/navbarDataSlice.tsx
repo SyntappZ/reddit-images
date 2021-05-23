@@ -17,7 +17,7 @@ export const navbarDataSlice = createSlice({
   name: "navbarData",
   initialState: {
     photography: subreddits.photography,
-    funny: subreddits.funny,
+    memes: subreddits.memes,
     gifs: [],
     favorites: [],
     recent: [],

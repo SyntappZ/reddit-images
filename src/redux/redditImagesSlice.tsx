@@ -1,15 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { error } from "node:console";
-import { subreddits } from "../data/subreddits";
+
 import { fetchImageData } from "../functions/movieDatabase";
-import { RedditImageArray, ImageObject } from "../interfaces/MainInterfaces";
-import { RedditImagesState, SearchObject } from "../interfaces/ReduxInterfaces";
+import { ImageObject } from "../interfaces/MainInterfaces";
+import { RedditImagesState } from "../interfaces/ReduxInterfaces";
 
 export const fetchImages = createAsyncThunk(
   "reddit/fetchImages",
-  async ({ subreddit, after }: SearchObject) => {
-    const response = await fetchImageData(subreddit, after);
-    return response;
+  async (subreddit: string, { getState }) => {
+    const { currentSubreddit, after } = getState() as RedditImagesState;
+
+    if (currentSubreddit && currentSubreddit === subreddit) {
+      const response = await fetchImageData(subreddit, after);
+      return { isNewSubreddit: false, data: response };
+    } else {
+      const response = await fetchImageData(subreddit, "");
+      return { isNewSubreddit: true, data: response };
+    }
   }
 );
 export const redditImagesSlice = createSlice({
@@ -20,39 +26,53 @@ export const redditImagesSlice = createSlice({
     gifs: [],
     favorites: [],
     currentSubreddit: "",
+    currentSubredditId: "",
+    fetchingImages: false
   } as RedditImagesState,
-  reducers: {},
+  reducers: {
+    clearImages(state, action) {
+      state.images = [];
+      state.gifs = [];
+      state.after = "";
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchImages.fulfilled, (state, action) => {
-      const { images, after, errorMessage } = action.payload;
+      const { images, after, errorMessage, subredditId, subreddit } =
+        action.payload.data;
+      const { isNewSubreddit } = action.payload;
+
       const hasImages = images.length > 0;
-      
-      console.log(images)
-      console.log('after: ' + after)
-      if (errorMessage) {
-        state.currentSubreddit = errorMessage;
-        state.after = "";
+
+      const clearImages = () => {
         state.images = [];
         state.gifs = [];
+        state.after = "";
+      };
+
+      if (isNewSubreddit) {
+        clearImages();
       }
 
+      state.currentSubreddit = subreddit;
+      state.currentSubredditId = subredditId;
+      if (errorMessage) {
+        state.currentSubreddit = errorMessage;
+        clearImages()
+      }
+
+      state.after = after;
       if (hasImages) {
-        const nextSubreddit = `/r/${images[0].subreddit}`;
-        if (state.currentSubreddit === nextSubreddit) {
-          state.after = after;
-        } else {
-          state.after = "";
-          state.images = [];
-          state.gifs = [];
-        }
-        state.currentSubreddit = nextSubreddit;
         images.forEach((image: ImageObject) => {
-          const imageReg = /\.jpg$|\.png$|\.gif$/;
+          const imageReg = /\.jpg$|\.png$/;
           const url = image.url;
           const preview = image.thumbnail;
-        
+
           if (imageReg.test(url)) {
             state.images.push(image);
+          }
+          if (image.url.endsWith(".gif")) {
+            state.gifs.push(image);
           }
         });
       }
@@ -61,6 +81,6 @@ export const redditImagesSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {} = redditImagesSlice.actions;
+export const { clearImages } = redditImagesSlice.actions;
 
 export default redditImagesSlice.reducer;

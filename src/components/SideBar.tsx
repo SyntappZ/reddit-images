@@ -9,19 +9,22 @@ import { FaHeart, FaCamera, FaHistory } from "react-icons/fa";
 import { BiHappyAlt } from "react-icons/bi";
 import { AiOutlineFileGif } from "react-icons/ai";
 
+import { fetchImages } from "../redux/redditImagesSlice";
 import "../css/sideBar.css";
-import { receiveMessageOnPort } from "node:worker_threads";
 
 const green = "#17a2b8";
-const dark = "#3e4349";
-const grey = "#dadada";
+// const dark = "#3e4349";
+// const grey = "#dadada";
 
 const SideBar = () => {
-  const { photography, funny, favorites, gifs, recent } = useAppSelector(
+  const { photography, memes, favorites, gifs, recent } = useAppSelector(
     (state) => state.subredditData
   );
+
+  const dispatch = useAppDispatch();
+
   const sendName = (subreddit: string) => {
-    console.log(subreddit);
+    dispatch(fetchImages(subreddit));
   };
 
   const categories = [
@@ -44,8 +47,8 @@ const SideBar = () => {
       eventKey: "2",
     },
     {
-      title: "funny",
-      list: funny,
+      title: "memes",
+      list: memes,
       icon: <BiHappyAlt color={green} />,
       eventKey: "3",
     },

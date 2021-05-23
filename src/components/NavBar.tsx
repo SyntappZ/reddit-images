@@ -9,12 +9,12 @@ import {
   Container,
 } from "react-bootstrap";
 import "../css/nav.css";
-import { SearchObject } from "../interfaces/ReduxInterfaces";
+
 import { fetchImages } from "../redux/redditImagesSlice";
 import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
 function NavBar() {
   const [inputValue, setInputValue] = useState<string>('')
-  const { after, currentSubreddit } = useAppSelector((state) => state.redditImages);
+ 
   const dispatch = useAppDispatch()
   const linkStyle = {
     color: "hsla(0,0%,100%,.5)",
@@ -23,14 +23,9 @@ function NavBar() {
 
   const searchReddit = (e:FormEvent) => {
     e.preventDefault()
-    const subreddit = `/r/${inputValue}`
-    
-    const searchObject: SearchObject = {
-      subreddit: subreddit,
-      after: after,
-    };
-    dispatch(fetchImages(searchObject))
-    
+    const subreddit = `${inputValue.replace(' ', '')}`
+    dispatch(fetchImages(subreddit))
+    setInputValue("")
   }
   return (
     <Navbar bg="dark" variant="dark" fixed="top"  className="py-4">
@@ -55,6 +50,7 @@ function NavBar() {
             placeholder="/r/Subreddit"
             className="mr-sm-2"
             onChange={(e) => setInputValue(e.target.value)}
+            value={inputValue}
           />
           <Button onClick={searchReddit} variant="outline-info">Search</Button>
         </Form>
