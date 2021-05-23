@@ -3,21 +3,3 @@
     min-height: 100vh;
 }
 
-.image-flex {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 50px;
-    justify-content: center;
-    align-items: center;
-}
-
-.image-wrap {
-    width: 400px;
-    margin: 10px;
-    
-}
-
-.image-wrap img {
-    width: 100%;
-    border-radius: 5px;
-}

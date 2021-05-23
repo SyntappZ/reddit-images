@@ -13,6 +13,7 @@ export interface RedditImagesState {
   after: string;
   images: ImageObject[];
   gifs: ImageObject[];
+  favorites: ImageObject[];
   currentSubreddit: string;
 }
 

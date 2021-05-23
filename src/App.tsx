@@ -16,7 +16,7 @@ function App() {
   const { after } = useAppSelector((state) => state.redditImages);
   const fetchNavbarLists = () => {
     const searchObject: SearchObject = {
-      subreddit: "/r/porngifs",
+      subreddit: "/r/pics",
       after: after,
     };
     dispatch(fetchSubreddits());

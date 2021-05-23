@@ -1,13 +1,18 @@
 import React, { useState } from "react";
+import ImageGrid from "../components/ImageGrid";
 
 import "../css/imagesPage.css";
+
 
 import { useAppSelector } from "../redux/reduxHooks";
 const ImagesPage = () => {
   const { images } = useAppSelector((state) => state.redditImages);
+ 
+ 
   return (
     <div className="images-page">
-      <div className="image-flex">
+      <ImageGrid images={images} />
+      {/* <div className="image-flex">
         {images.map((image) => {
           return (
             <div key={image.url} className="image-wrap">
@@ -15,7 +20,7 @@ const ImagesPage = () => {
             </div>
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -3,6 +3,7 @@
 export interface RedditImageArray {
     after: string;
     images: ImageObject[];
+    errorMessage: string
 }
 
 export interface ImageObject {
@@ -11,6 +12,7 @@ export interface ImageObject {
     url: string;
     permalink: string;
     subreddit: string;
+    id: string
 }
 
 export interface ListTitleProps {

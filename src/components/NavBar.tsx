@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {FormEvent, useState} from "react";
 import { Link } from "react-router-dom";
 import {
   Navbar,
@@ -21,7 +21,8 @@ function NavBar() {
     textDecoration: "none",
   };
 
-  const searchReddit = () => {
+  const searchReddit = (e:FormEvent) => {
+    e.preventDefault()
     const subreddit = `/r/${inputValue}`
     
     const searchObject: SearchObject = {
@@ -29,6 +30,7 @@ function NavBar() {
       after: after,
     };
     dispatch(fetchImages(searchObject))
+    
   }
   return (
     <Navbar bg="dark" variant="dark" fixed="top"  className="py-4">
@@ -47,7 +49,7 @@ function NavBar() {
           </Navbar.Text>
         </Nav>
 
-        <Form inline>
+        <Form inline onSubmit={searchReddit}>
           <FormControl
             type="text"
             placeholder="/r/Subreddit"

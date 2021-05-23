@@ -12,7 +12,7 @@ const TitleContainer = () => {
         <Row>
           <Col xs={6} md={4}>
             <div className="current-subreddit">
-              <h4>{currentSubreddit}</h4>
+              <h5>{currentSubreddit}</h5>
             </div>
           </Col>
           <Col xs={12} md={8}>
