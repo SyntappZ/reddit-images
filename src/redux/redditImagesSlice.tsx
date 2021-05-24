@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchImageData } from "../functions/movieDatabase";
 import { ImageObject } from "../interfaces/MainInterfaces";
 import { RedditImagesState } from "../interfaces/ReduxInterfaces";
-
+import { storeItem, fetchFromStorage } from "../functions/storageFunctions";
 interface redditImagesProps {
   redditImages: RedditImagesState;
 }
@@ -17,9 +17,9 @@ export const fetchImages = createAsyncThunk(
     const { after } = redditImages;
     const isSameSubreddit = currentSubreddit === nextSubreddit;
 
-    
     if (isSameSubreddit) {
       console.log("not new");
+      
       const response = await fetchImageData(subreddit, after);
       return { isNewSubreddit: false, data: response };
     } else {
@@ -36,16 +36,22 @@ export const redditImagesSlice = createSlice({
     after: "",
     images: [],
     gifs: [],
+    allImages: [],
+    imagePages: [],
+    pageCounter: [],
     favorites: [],
+    history: [],
     currentSubreddit: "",
     currentSubredditId: "",
     fetchingImages: false,
   } as RedditImagesState,
   reducers: {
-    clearImages(state, action) {
-      state.images = [];
-      state.gifs = [];
-      state.after = "";
+    addHistoryItems(state) {
+      const data = fetchFromStorage("history");
+
+      if (data) {
+        state.history = data;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -56,13 +62,28 @@ export const redditImagesSlice = createSlice({
 
       const hasImages = images.length > 0;
 
+      const addHistory = () => {
+        if (state.history.includes(subreddit)) return;
+
+        if (state.history.length <= 50) {
+          state.history.push(subreddit);
+        } else {
+          state.history.pop();
+          state.history.unshift(subreddit);
+        }
+        storeItem("history", state.history);
+      };
+
       const clearImages = () => {
         state.images = [];
         state.gifs = [];
+        state.allImages = [];
         state.after = "";
+        state.imagePages = [];
       };
 
       if (isNewSubreddit) {
+        addHistory();
         clearImages();
       }
 
@@ -73,6 +94,8 @@ export const redditImagesSlice = createSlice({
         clearImages();
       }
 
+      const imageArray: ImageObject[] = [];
+
       state.after = after;
       if (hasImages) {
         images.forEach((image: ImageObject) => {
@@ -82,17 +105,22 @@ export const redditImagesSlice = createSlice({
 
           if (imageReg.test(url)) {
             state.images.push(image);
+            imageArray.push(image);
           }
           if (image.url.endsWith(".gif")) {
             state.gifs.push(image);
+            imageArray.push(image);
           }
         });
+
+        state.allImages = [...state.allImages, ...imageArray];
+        state.imagePages.push(imageArray);
       }
     });
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { clearImages } = redditImagesSlice.actions;
+export const { addHistoryItems } = redditImagesSlice.actions;
 
 export default redditImagesSlice.reducer;

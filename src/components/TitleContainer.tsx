@@ -13,7 +13,7 @@ import { useAppSelector } from "../redux/reduxHooks";
 
 const TitleContainer = () => {
   const [onGallery, setOnGallery] = useState(true);
-  const { currentSubreddit, images } = useAppSelector(
+  const { currentSubreddit, images, history } = useAppSelector(
     (state) => state.redditImages
   );
 
@@ -32,15 +32,16 @@ const TitleContainer = () => {
           <Col xs={6} md={4}>
             <div className="current-subreddit">
               <h5>r/{currentSubreddit}</h5>
-              {/* <p>{images.length} Images</p> */}
+            
             </div>
           </Col>
           <Col xs={12} md={8}>
             <div className="recent-list">
-              <p>list</p>
-              <p>list</p>
-              <p>list</p>
-              <p>list</p>
+              {history.map((item, i) => {
+                if (i < 10) {
+                  return <p key={item + i}>r/{item}</p>;
+                }
+              })}
             </div>
           </Col>
         </Row>

@@ -14,7 +14,16 @@
     height: 100px;
     color: white;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+   
+    justify-content: flex-end;
     align-items: center;
+}
+
+.recent-list p {
+  padding: 5px;
+  cursor: pointer;
+  transition: .3s;
+}
+.recent-list p:hover {
+  color: var(--green);
 }

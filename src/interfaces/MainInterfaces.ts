@@ -1,7 +1,18 @@
 export interface ImageObject {
+    author: string;
     title: string;
     thumbnail: string;
     url: string;
+    permalink: string;
+    subreddit: string;
+    subredditId: string;
+    id: string
+}
+
+export interface UserImageObject {
+    author: string;
+    title?: string;
+    url?: string;
     permalink: string;
     subreddit: string;
     subredditId: string;
@@ -36,4 +47,7 @@ export interface ImageGridProps {
     images: ImageObject[];
     currentSubreddit: string
 }
+
+export type StorageItem = string[] | ImageObject[]
+
 

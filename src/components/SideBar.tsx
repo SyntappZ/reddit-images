@@ -17,9 +17,11 @@ const green = "#17a2b8";
 // const grey = "#dadada";
 
 const SideBar = () => {
-  const { photography, memes, favorites, gifs, recent } = useAppSelector(
+  const { photography, memes, favorites, gifs } = useAppSelector(
     (state) => state.subredditData
   );
+
+  const { history } = useAppSelector((state) => state.redditImages);
 
   const dispatch = useAppDispatch();
 
@@ -54,7 +56,7 @@ const SideBar = () => {
     },
     {
       title: "recent",
-      list: recent,
+      list: history,
       icon: <FaHistory color={green} />,
       eventKey: "4",
     },

@@ -39,7 +39,7 @@ function NavBar() {
           </Navbar.Text>
           <Navbar.Text className="link">
             <Link style={linkStyle} to="/gifs">
-              Gifs
+              Favorites
             </Link>
           </Navbar.Text>
         </Nav>

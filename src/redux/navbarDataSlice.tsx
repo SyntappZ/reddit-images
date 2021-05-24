@@ -1,18 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { subreddits } from "../data/subreddits";
-import { fetchGifSubreddits } from "../functions/movieDatabase";
+
 import { removeDuplicates } from "../functions/converterFunctions";
 import { NavbarDataState } from "../interfaces/ReduxInterfaces";
 
 
 
-export const fetchSubreddits = createAsyncThunk<string[]>(
-  "subreddits/fetchSubreddits",
-  async () => {
-    const response = await fetchGifSubreddits();
-    return response;
-  }
-);
+
 export const navbarDataSlice = createSlice({
   name: "navbarData",
   initialState: {
@@ -24,9 +18,7 @@ export const navbarDataSlice = createSlice({
   } as NavbarDataState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchSubreddits.fulfilled, (state, action) => {
-      state.gifs = removeDuplicates(action.payload);
-    });
+   
   },
 });
 

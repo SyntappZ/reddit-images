@@ -6,17 +6,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import TitleContainer from "./components/TitleContainer";
-
-import { fetchImages } from "./redux/redditImagesSlice";
+import { fetchUserImages } from "./functions/movieDatabase";
+import { fetchImages, addHistoryItems } from "./redux/redditImagesSlice";
 import { useAppDispatch } from "./redux/reduxHooks";
 
 function App() {
   const dispatch = useAppDispatch();
 
   const fetchDefaultImages = () => {
-    dispatch(fetchImages("mostbeautiful"));
+    dispatch(fetchImages("OF_Lebr18"));
+    dispatch(addHistoryItems());
   };
   useEffect(() => {
+    
     fetchDefaultImages();
   }, []);
   return (

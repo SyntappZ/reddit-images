@@ -3,10 +3,12 @@ import SlideShow from "../components/SlideShow";
 import { useAppSelector, useAppDispatch } from "../redux/reduxHooks";
 
 const SlideShowPage = () => {
-  const { images, gifs } = useAppSelector((state) => state.redditImages);
+  const { allImages, currentSubredditId, imagePages } = useAppSelector((state) => state.redditImages);
+
+  // console.log(allImages)
   return (
     <div className="slide-show-page">
-      <SlideShow images={images} gifs={gifs} />
+      <SlideShow images={allImages} subredditId={currentSubredditId} imagePages={imagePages} />
     </div>
   );
 };
