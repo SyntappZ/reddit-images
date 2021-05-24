@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { ImageObject } from "../interfaces/MainInterfaces";
 import "react-lazy-load-image-component/src/effects/opacity.css";
@@ -9,7 +9,12 @@ interface LazyImageProps {
 }
 
 const LazyImage = ({ image }: LazyImageProps) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const load = () => {
+    setLoading(false);
+  };
+
   return (
     <div className="image-wrap">
       <LazyLoadImage
@@ -17,9 +22,9 @@ const LazyImage = ({ image }: LazyImageProps) => {
         effect="opacity"
         src={image.url}
         width={"100%"}
-        afterLoad={() => setLoading(false)}
+        afterLoad={load}
       />
-    {loading ? <LottieLoader /> : null}
+      {loading ? <LottieLoader /> : null}
     </div>
   );
 };
@@ -35,7 +40,7 @@ const LottieLoader = () => {
   };
   return (
     <div className="lottie-wrap">
-      <Lottie options={defaultOptions} width={"100%"} />
+      <Lottie options={defaultOptions} width={100} />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 .image-grid {
-  padding: 50px 150px;
+  padding: 0 150px 50px 150px;
   justify-content: center;
   align-items: center;
 }
@@ -24,7 +24,8 @@
 }
 
 .lottie-wrap {
-  padding: 120px;
+  padding: 20px;
+  
 }
 
 @media (max-width: 1024px) {

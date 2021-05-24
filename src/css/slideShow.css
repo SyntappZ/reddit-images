@@ -1,0 +1,30 @@
+.slide-show-page {
+  padding: 0 200px 50px 200px;
+}
+
+.slide-show {
+  width: 100%;
+}
+
+.slide-item {
+  width: 100%;
+}
+.slide-image-wrap {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.075);
+  display: flex;
+  justify-content: center;
+}
+
+.slide-item img {
+  height: 650px;
+}
+.slide-show-bar {
+  height: 100px;
+  position: absolute;
+ 
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 300;
+}

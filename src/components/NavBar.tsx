@@ -11,7 +11,7 @@ import {
 import "../css/nav.css";
 
 import { fetchImages } from "../redux/redditImagesSlice";
-import { useAppDispatch, useAppSelector } from "../redux/reduxHooks";
+import { useAppDispatch } from "../redux/reduxHooks";
 function NavBar() {
   const [inputValue, setInputValue] = useState<string>('')
  
@@ -25,7 +25,7 @@ function NavBar() {
     e.preventDefault()
     const subreddit = `${inputValue.replace(' ', '')}`
     dispatch(fetchImages(subreddit))
-    setInputValue("")
+    // setInputValue("")
   }
   return (
     <Navbar bg="dark" variant="dark" fixed="top"  className="py-4">
@@ -47,7 +47,7 @@ function NavBar() {
         <Form inline onSubmit={searchReddit}>
           <FormControl
             type="text"
-            placeholder="/r/Subreddit"
+            placeholder="r/Subreddit"
             className="mr-sm-2"
             onChange={(e) => setInputValue(e.target.value)}
             value={inputValue}

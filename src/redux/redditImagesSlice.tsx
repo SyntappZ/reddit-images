@@ -4,15 +4,27 @@ import { fetchImageData } from "../functions/movieDatabase";
 import { ImageObject } from "../interfaces/MainInterfaces";
 import { RedditImagesState } from "../interfaces/ReduxInterfaces";
 
+interface redditImagesProps {
+  redditImages: RedditImagesState;
+}
+
 export const fetchImages = createAsyncThunk(
   "reddit/fetchImages",
   async (subreddit: string, { getState }) => {
-    const { currentSubreddit, after } = getState() as RedditImagesState;
+    const { redditImages } = getState() as redditImagesProps;
+    const currentSubreddit = redditImages.currentSubreddit.toLowerCase();
+    const nextSubreddit = subreddit.toLowerCase();
+    const { after } = redditImages;
+    const isSameSubreddit = currentSubreddit === nextSubreddit;
 
-    if (currentSubreddit && currentSubreddit === subreddit) {
+    
+    if (isSameSubreddit) {
+      console.log("not new");
       const response = await fetchImageData(subreddit, after);
       return { isNewSubreddit: false, data: response };
     } else {
+      console.log("is new");
+
       const response = await fetchImageData(subreddit, "");
       return { isNewSubreddit: true, data: response };
     }
@@ -27,7 +39,7 @@ export const redditImagesSlice = createSlice({
     favorites: [],
     currentSubreddit: "",
     currentSubredditId: "",
-    fetchingImages: false
+    fetchingImages: false,
   } as RedditImagesState,
   reducers: {
     clearImages(state, action) {
@@ -58,7 +70,7 @@ export const redditImagesSlice = createSlice({
       state.currentSubredditId = subredditId;
       if (errorMessage) {
         state.currentSubreddit = errorMessage;
-        clearImages()
+        clearImages();
       }
 
       state.after = after;

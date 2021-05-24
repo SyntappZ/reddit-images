@@ -6,13 +6,11 @@ const fetchImageData = async (
   after: string
 ): Promise<RedditImageArray> => {
   try {
-    console.log(subreddit);
     if (!subreddit) throw "empty";
 
     const url: string = `https://www.reddit.com/r/${subreddit}.json?limit=100&after=${after}`;
     const response = await fetch(url);
     const { data } = await response.json();
-    console.log(data);
 
     const afterString = data.after;
     const images = data.children.map((item: Child): ImageObject => {

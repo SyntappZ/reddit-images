@@ -34,5 +34,6 @@ export interface MultiListProps extends Category {
 
 export interface ImageGridProps {
     images: ImageObject[];
+    currentSubreddit: string
 }
 

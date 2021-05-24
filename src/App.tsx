@@ -14,7 +14,7 @@ function App() {
   const dispatch = useAppDispatch();
 
   const fetchDefaultImages = () => {
-    dispatch(fetchImages("MostBeautiful"));
+    dispatch(fetchImages("mostbeautiful"));
   };
   useEffect(() => {
     fetchDefaultImages();
