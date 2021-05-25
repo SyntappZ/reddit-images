@@ -15,6 +15,7 @@ export interface NavbarDataState {
 
 export interface RedditImagesState {
   after: string;
+  afterArray: string[];
   images: ImageObject[];
   gifs: ImageObject[];
   allImages: ImageObject[];

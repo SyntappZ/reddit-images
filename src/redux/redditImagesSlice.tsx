@@ -19,7 +19,7 @@ export const fetchImages = createAsyncThunk(
 
     if (isSameSubreddit) {
       console.log("not new");
-      
+
       const response = await fetchImageData(subreddit, after);
       return { isNewSubreddit: false, data: response };
     } else {
@@ -34,6 +34,7 @@ export const redditImagesSlice = createSlice({
   name: "redditImages",
   initialState: {
     after: "",
+    afterArray: [],
     images: [],
     gifs: [],
     allImages: [],
@@ -53,6 +54,9 @@ export const redditImagesSlice = createSlice({
         state.history = data;
       }
     },
+    addToAfterArray(state, action) {
+      state.afterArray.push(action.payload);
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImages.fulfilled, (state, action) => {
@@ -61,12 +65,12 @@ export const redditImagesSlice = createSlice({
       const { isNewSubreddit } = action.payload;
 
       const hasImages = images.length > 0;
-
+      
       const addHistory = () => {
         if (state.history.includes(subreddit)) return;
 
         if (state.history.length <= 50) {
-          state.history.push(subreddit);
+          state.history.unshift(subreddit);
         } else {
           state.history.pop();
           state.history.unshift(subreddit);
@@ -80,6 +84,7 @@ export const redditImagesSlice = createSlice({
         state.allImages = [];
         state.after = "";
         state.imagePages = [];
+        state.afterArray = [];
       };
 
       if (isNewSubreddit) {
@@ -121,6 +126,6 @@ export const redditImagesSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addHistoryItems } = redditImagesSlice.actions;
+export const { addHistoryItems, addToAfterArray } = redditImagesSlice.actions;
 
 export default redditImagesSlice.reducer;

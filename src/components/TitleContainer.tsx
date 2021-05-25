@@ -9,15 +9,24 @@ import {
   Button,
 } from "react-bootstrap";
 import "../css/titleContainer.css";
-import { useAppSelector } from "../redux/reduxHooks";
+import { useAppSelector, useAppDispatch } from "../redux/reduxHooks";
+import { fetchImages } from "../redux/redditImagesSlice";
 
 const TitleContainer = () => {
   const [onGallery, setOnGallery] = useState(true);
+
   const { currentSubreddit, images, history } = useAppSelector(
     (state) => state.redditImages
   );
+  const dispatch = useAppDispatch()
+
+  const sendItem = (item: string) => {
+    dispatch(fetchImages(item))
+  }
 
   let location = useLocation();
+
+  
 
   useEffect(() => {
     const gallery = location.pathname === "/";
@@ -39,7 +48,7 @@ const TitleContainer = () => {
             <div className="recent-list">
               {history.map((item, i) => {
                 if (i < 10) {
-                  return <p key={item + i}>r/{item}</p>;
+                  return <p onClick={() => sendItem(item)} key={item + i}>r/{item}</p>;
                 }
               })}
             </div>

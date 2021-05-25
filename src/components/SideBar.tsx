@@ -37,12 +37,6 @@ const SideBar = () => {
       eventKey: "0",
     },
     {
-      title: "gifs",
-      list: gifs,
-      icon: <AiOutlineFileGif color={green} />,
-      eventKey: "1",
-    },
-    {
       title: "photography",
       list: photography,
       icon: <FaCamera color={green} />,

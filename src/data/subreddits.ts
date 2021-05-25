@@ -4,6 +4,9 @@ const photography = [
     "ITookAPicture",
     "PortraitPhotos",
     "WildlifePhotography",
+    "EarthPorn",
+    "CityPorn",
+    
     
  ]
 const memes = [

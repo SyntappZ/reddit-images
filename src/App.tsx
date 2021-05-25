@@ -14,7 +14,7 @@ function App() {
   const dispatch = useAppDispatch();
 
   const fetchDefaultImages = () => {
-    dispatch(fetchImages("OF_Lebr18"));
+    dispatch(fetchImages("MostBeautiful"));
     dispatch(addHistoryItems());
   };
   useEffect(() => {
