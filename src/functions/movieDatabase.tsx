@@ -4,6 +4,7 @@ import {
   RedditImageArray,
   ImageObject,
   UserImageObject,
+  UserImageArray
 } from "../interfaces/MainInterfaces";
 
 const fetchImageData = async (
@@ -64,15 +65,21 @@ const fetchImageData = async (
   }
 };
 
-const fetchUserImages = async (user: string) => {
+
+
+
+
+const fetchUserImages = async (user: string):Promise<UserImageArray> => {
   const url = `https://www.reddit.com/user/${user}.json`;
 
   try {
+    if (!user) throw "no user";
     const response = await fetch(url);
 
     const { data } = await response.json();
+   
 
-    console.log(data.children);
+    // console.log(data.children);
 
     const afterString = data.after;
     const images = data.children.map((item: UserData): UserImageObject => {
@@ -89,7 +96,7 @@ const fetchUserImages = async (user: string) => {
     });
 
     if (images.length > 0) {
-      const imagesData: RedditImageArray = {
+      const imagesData: UserImageArray = {
         after: afterString,
         images: images,
         subredditId: images[0].subredditId,
@@ -107,7 +114,15 @@ const fetchUserImages = async (user: string) => {
       };
     }
   } catch (err) {
-    console.error(err);
+    
+    console.log(err);
+    return {
+      after: "",
+      images: [],
+      subredditId: "",
+      subreddit: "",
+      errorMessage: err,
+    };
   }
 };
 

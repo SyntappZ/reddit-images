@@ -42,7 +42,7 @@ const SlideShow = ({
   const [fullScreen, setFullScreen] = useState(false);
   const [page, setPage] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
-  const [slideSpeed, setSlideSpeed] = useState(4000);
+  const [slideSpeed, setSlideSpeed] = useState(2000);
   const [pageImages, setPageImages] = useState<ImageObject[]>([]);
   const dispatch = useAppDispatch();
 

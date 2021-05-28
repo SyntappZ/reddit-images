@@ -6,10 +6,10 @@ import { useAppSelector, useAppDispatch } from "../redux/reduxHooks";
 import { fetchImages } from "../redux/redditImagesSlice";
 
 const ImagesPage = () => {
-  const { images, currentSubreddit } = useAppSelector(
+  const { images, currentSubreddit, history } = useAppSelector(
     (state) => state.redditImages
   );
-  console.log("current " + currentSubreddit);
+
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -20,13 +20,13 @@ const ImagesPage = () => {
     };
   }, []);
 
+  const sendItem = (item: string) => {
+    dispatch(fetchImages(item));
+  };
+
   const loadMoreImages = () => {
-
-
     if (!isLoaded) {
-      console.log("load more images");
-      console.log(currentSubreddit);
-       dispatch(fetchImages(currentSubreddit));
+      dispatch(fetchImages(currentSubreddit));
       setTimeout(() => {
         setIsLoaded(false);
       }, 3000);
@@ -58,7 +58,18 @@ const ImagesPage = () => {
 
   return (
     <div className="images-page">
-      <ImageGrid images={images} currentSubreddit={currentSubreddit} />
+      <div className="recent-list">
+        {history.map((item, i) => {
+          if (i < 10) {
+            return (
+              <p onClick={() => sendItem(item)} key={item + i}>
+                r/{item}
+              </p>
+            );
+          }
+        })}
+      </div>
+      <ImageGrid images={images} />
     </div>
   );
 };

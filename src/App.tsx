@@ -9,6 +9,11 @@ import TitleContainer from "./components/TitleContainer";
 import { fetchUserImages } from "./functions/movieDatabase";
 import { fetchImages, addHistoryItems } from "./redux/redditImagesSlice";
 import { useAppDispatch } from "./redux/reduxHooks";
+import ScrollToTop from './router/ScrollToTop'
+// history.listen((locations, action) => {
+//   console.log(locations)
+//   console.log(action)
+//  });
 
 function App() {
   const dispatch = useAppDispatch();
@@ -24,6 +29,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+      <ScrollToTop />
         <NavBar />
         <div className="main-container">
           <SideBar />

@@ -3,3 +3,21 @@
    
 }
 
+.recent-list {
+    height: 100px;
+    color: white;
+    display: flex;
+   
+    justify-content: center;
+    align-items: center;
+}
+
+.recent-list p {
+  padding: 5px;
+  cursor: pointer;
+  transition: .3s;
+}
+.recent-list p:hover {
+  color: var(--green);
+}
+

@@ -40,19 +40,19 @@ const SideBar = () => {
       title: "photography",
       list: photography,
       icon: <FaCamera color={green} />,
-      eventKey: "2",
+      eventKey: "1",
     },
     {
       title: "memes",
       list: memes,
       icon: <BiHappyAlt color={green} />,
-      eventKey: "3",
+      eventKey: "2",
     },
     {
       title: "recent",
       list: history,
       icon: <FaHistory color={green} />,
-      eventKey: "4",
+      eventKey: "5",
     },
   ];
 

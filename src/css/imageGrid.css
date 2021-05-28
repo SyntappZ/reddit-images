@@ -17,6 +17,7 @@
 .image-wrap {
   width: 100%;
   margin: 10px;
+  cursor: pointer;
 }
 
 .image-wrap img {

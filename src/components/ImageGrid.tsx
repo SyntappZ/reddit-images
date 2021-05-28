@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Masonry from "react-masonry-css";
-import { ImageObject } from "../interfaces/MainInterfaces";
+import { ImageObject, UserImageObject } from "../interfaces/MainInterfaces";
 import "../css/imageGrid.css";
 import { ImageGridProps } from "../interfaces/MainInterfaces";
 import LazyImage from "./LazyImage";
 
-const ImageGrid = ({ images, currentSubreddit }: ImageGridProps) => {
-  const [countImages, setCountImages] = useState<number>(0);
+const ImageGrid = ({ images }: ImageGridProps) => {
+  // const [countImages, setCountImages] = useState<number>(0);
 
-  useEffect(() => {
-    console.log(countImages);
-  }, [countImages]);
+  // useEffect(() => {
+  //   console.log(countImages);
+  // }, [countImages]);
 
   return (
     <div className="image-grid">
@@ -19,12 +19,11 @@ const ImageGrid = ({ images, currentSubreddit }: ImageGridProps) => {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {images.map((image: ImageObject) => {
+        {images.map((image: ImageObject | UserImageObject) => {
           return (
             <LazyImage
               key={image.id}
-              image={image}
-              
+              image={image}   
             />
           );
         })}

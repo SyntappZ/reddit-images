@@ -45,13 +45,7 @@ const TitleContainer = () => {
             </div>
           </Col>
           <Col xs={12} md={8}>
-            <div className="recent-list">
-              {history.map((item, i) => {
-                if (i < 10) {
-                  return <p onClick={() => sendItem(item)} key={item + i}>r/{item}</p>;
-                }
-              })}
-            </div>
+          
           </Col>
         </Row>
         <Row>

@@ -27,6 +27,14 @@ export interface RedditImageArray {
     errorMessage: string
 }
 
+export interface UserImageArray {
+    after: string;
+    images: UserImageObject[];
+    subredditId: string;
+    subreddit: string;
+    errorMessage: string
+}
+
 
 
 export interface ListTitleProps {
@@ -44,8 +52,7 @@ export interface MultiListProps extends Category {
 }
 
 export interface ImageGridProps {
-    images: ImageObject[];
-    currentSubreddit: string
+    images: ImageObject[] | UserImageObject[];
 }
 
 export type StorageItem = string[] | ImageObject[]

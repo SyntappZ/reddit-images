@@ -1,22 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { ImageObject } from "../interfaces/MainInterfaces";
+import { ImageObject, UserImageObject } from "../interfaces/MainInterfaces";
+import { useHistory } from "react-router-dom";
 import "react-lazy-load-image-component/src/effects/opacity.css";
 import Lottie from "react-lottie";
 import animationData from "../images/loadingImage.json";
+import { useAppDispatch } from "../redux/reduxHooks";
+import { addImageToStore } from "../redux/currentImageSlice";
 interface LazyImageProps {
-  image: ImageObject;
+  image: ImageObject | UserImageObject;
 }
 
 const LazyImage = ({ image }: LazyImageProps) => {
   const [loading, setLoading] = useState<boolean>(true);
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+
+  const goToImagePage = () => {
+    dispatch(addImageToStore(image));
+    history.push(`/image/${image.id}`)
+  };
 
   const load = () => {
     setLoading(false);
   };
 
+ 
+
   return (
-    <div className="image-wrap">
+    <div className="image-wrap" onClick={goToImagePage}>
       <LazyLoadImage
         alt={image.title}
         effect="opacity"
