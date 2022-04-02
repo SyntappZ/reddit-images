@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchUserImages } from "../functions/movieDatabase";
-import { RedditImagesState } from "../interfaces/ReduxInterfaces";
+// import { RedditImagesState } from "../interfaces/ReduxInterfaces";
 import { storeItem, fetchFromStorage } from "../functions/storageFunctions";
 import {
   RedditImageArray,

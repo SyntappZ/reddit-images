@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {  useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -42,23 +42,83 @@ const SlideShow = ({
   const [fullScreen, setFullScreen] = useState(false);
   const [page, setPage] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
-  const [slideSpeed, setSlideSpeed] = useState(2000);
+  const [slideSpeed, setSlideSpeed] = useState(3000);
+  const [buttonText, setButtonText] = useState("Gifs");
+  const [isGifs, setIsGifs] = useState(false);
   const [pageImages, setPageImages] = useState<ImageObject[]>([]);
+  const [allImages, setAllImages] = useState<ImageObject[]>([]);
   const dispatch = useAppDispatch();
 
-  const fetchNextPage = () => {
-    if (!afterArray.includes(after)) {
-      console.log("fetch more");
-      dispatch(fetchImages(subreddit));
-      dispatch(addToAfterArray(after));
-    } else {
-      const next = page + 1;
-      const item = imagePages[next];
-      setPageImages(item);
-      setPage(next);
+  const gifToggle = () => {
+    if(isGifs) {
+      setSlideIndex(0)
+      setAllImages(shuffle(images));
+      setIsGifs(false);
+      
+    }else{
+      const gifs = gifExtractor(images);
+      setSlideIndex(0)
+      setAllImages(shuffle(gifs));
+      setIsGifs(true);
+      
     }
   };
- 
+
+  const gifExtractor = (arr: ImageObject[]) => {
+    const gifs:ImageObject[] = []
+
+    arr.forEach(image => {
+      if (image.url.endsWith(".gif")) {
+            
+        gifs.push(image);
+        
+      }
+    })
+    return gifs
+  }
+
+  useEffect(() => {
+    if(isGifs) {
+      setSlideSpeed(6000)
+      setButtonText("IMAGES")
+    }else{
+      setSlideSpeed(3000)
+      setButtonText("GIFS")
+
+
+    }
+  }, [isGifs])
+
+  function shuffle(array: ImageObject[]) {
+    const arr = [...array]
+
+    let currentIndex = arr.length,  randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [arr[currentIndex], arr[randomIndex]] = [
+        arr[randomIndex], arr[currentIndex]];
+    }
+  
+    return arr;
+  }
+
+  
+  useEffect(() => {
+
+   
+    if(images.length > 0) {
+      setSlideIndex(0)
+      setAllImages(shuffle(images))
+      
+    }
+  }, [images]);
 
   useEffect(() => {
     setSlideIndex(0);
@@ -70,15 +130,7 @@ const SlideShow = ({
     setSlideIndex(selectedIndex);
   };
 
-  const changePage = (forward: boolean) => {
-    if (forward) {
-      fetchNextPage();
-    } else {
-      if (page) {
-        setPage((state) => state - 1);
-      }
-    }
-  };
+ 
 
   const slideStyle = {
     position: "fixed" as "fixed",
@@ -98,13 +150,14 @@ const SlideShow = ({
         <Container fluid className="p-3">
           <Row>
             <Col>
-              <p style={{ color: "white" }}>Pages: {imagePages.length} </p>
+              <p style={{ color: "white" }}>Slide {slideIndex} - {allImages.length} </p>
+              
               <Button
                 variant="outline-light"
                 className="mr-2"
-                onClick={() => changePage(false)}
+                onClick={gifToggle}
               >
-                previous page
+                {buttonText}
               </Button>
             </Col>
             <Col className="d-flex flex-row-reverse">
@@ -115,13 +168,7 @@ const SlideShow = ({
               >
                 {fullScreen ? "shrink" : "expand"}
               </Button>
-              <Button
-                variant="outline-light"
-                className="mr-2"
-                onClick={() => changePage(true)}
-              >
-                next page
-              </Button>
+             
             </Col>
           </Row>
         </Container>
@@ -131,7 +178,7 @@ const SlideShow = ({
         interval={slideSpeed}
         onSelect={handleSelect}
       >
-        {images.map((image, i) => (
+        {allImages.map((image, i) => (
           <Carousel.Item key={image.id + i} className="slide-item">
             <div
               className="slide-image-wrap"

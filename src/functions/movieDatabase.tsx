@@ -115,13 +115,13 @@ const fetchUserImages = async (user: string):Promise<UserImageArray> => {
     }
   } catch (err) {
     
-    console.log(err);
+    
     return {
       after: "",
       images: [],
       subredditId: "",
       subreddit: "",
-      errorMessage: err,
+      errorMessage: "err",
     };
   }
 };

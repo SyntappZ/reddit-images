@@ -7,6 +7,7 @@ import Lottie from "react-lottie";
 import animationData from "../images/loadingImage.json";
 import { useAppDispatch } from "../redux/reduxHooks";
 import { addImageToStore } from "../redux/currentImageSlice";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 interface LazyImageProps {
   image: ImageObject | UserImageObject;
 }
@@ -29,6 +30,9 @@ const LazyImage = ({ image }: LazyImageProps) => {
 
   return (
     <div className="image-wrap" onClick={goToImagePage}>
+     
+      {/* <FaHeart className="fav-heart" color="black" size="1.5rem" /> */}
+      
       <LazyLoadImage
         alt={image.title}
         effect="opacity"

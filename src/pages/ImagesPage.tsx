@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { FC, useState, useEffect } from "react";
 import ImageGrid from "../components/ImageGrid";
 import "../css/imagesPage.css";
 
 import { useAppSelector, useAppDispatch } from "../redux/reduxHooks";
-import { fetchImages } from "../redux/redditImagesSlice";
+import { fetchImages, addSubreddit } from "../redux/redditImagesSlice";
 
-const ImagesPage = () => {
+const ImagesPage:FC = () => {
   const { images, currentSubreddit, history } = useAppSelector(
     (state) => state.redditImages
   );
@@ -20,18 +20,33 @@ const ImagesPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if(currentSubreddit) {
+      fetchSomeImages(currentSubreddit)
+    }
+
+  }, [currentSubreddit])
+
+
+  const fetchSomeImages = (subreddit: string) => {
+    const obj = {
+      sub: subreddit
+    }
+    dispatch(fetchImages(subreddit));
+  }
+
   const sendItem = (item: string) => {
-    dispatch(fetchImages(item));
+    dispatch(addSubreddit(item));
   };
 
-  const loadMoreImages = () => {
-    if (!isLoaded) {
-      dispatch(fetchImages(currentSubreddit));
-      setTimeout(() => {
-        setIsLoaded(false);
-      }, 3000);
-    }
-  };
+  // const loadMoreImages = () => {
+  //   if (!isLoaded) {
+  //     dispatch(fetchImages(currentSubreddit));
+  //     setTimeout(() => {
+  //       setIsLoaded(false);
+  //     }, 3000);
+  //   }
+  // };
 
   const handleScroll = () => {
     const windowHeight =
@@ -51,8 +66,8 @@ const ImagesPage = () => {
     if (windowBottom >= docHeight) {
       console.log("bottom reached");
 
-      // loadMoreImages();
-      // setIsLoaded(true);
+     
+      
     }
   };
 

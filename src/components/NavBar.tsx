@@ -25,7 +25,7 @@ function NavBar() {
     e.preventDefault()
     const subreddit = `${inputValue.replace(' ', '')}`
     dispatch(fetchImages(subreddit))
-    // setInputValue("")
+    setInputValue("")
   }
   return (
     <Navbar bg="dark" variant="dark" fixed="top"  className="py-4">

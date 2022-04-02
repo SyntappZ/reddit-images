@@ -18,13 +18,10 @@ import ScrollToTop from './router/ScrollToTop'
 function App() {
   const dispatch = useAppDispatch();
 
-  const fetchDefaultImages = () => {
-    dispatch(fetchImages("MostBeautiful"));
-    dispatch(addHistoryItems());
-  };
+ 
   useEffect(() => {
     
-    fetchDefaultImages();
+    dispatch(addHistoryItems());
   }, []);
   return (
     <div className="App">

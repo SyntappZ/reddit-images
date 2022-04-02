@@ -4,32 +4,24 @@ import { fetchImageData } from "../functions/movieDatabase";
 import { ImageObject } from "../interfaces/MainInterfaces";
 import { RedditImagesState } from "../interfaces/ReduxInterfaces";
 import { storeItem, fetchFromStorage } from "../functions/storageFunctions";
+import currentImageSlice from "./currentImageSlice";
+import { is } from "immer/dist/internal";
 interface redditImagesProps {
   redditImages: RedditImagesState;
 }
 
 export const fetchImages = createAsyncThunk(
   "reddit/fetchImages",
-  async (subreddit: string, { getState }) => {
-    const { redditImages } = getState() as redditImagesProps;
-    const currentSubreddit = redditImages.currentSubreddit.toLowerCase();
-    const nextSubreddit = subreddit.toLowerCase();
-    const { after } = redditImages;
-    const isSameSubreddit = currentSubreddit === nextSubreddit;
-
-    if (isSameSubreddit) {
-      console.log("not new");
-
-      const response = await fetchImageData(subreddit, after);
-      return { isNewSubreddit: false, data: response };
-    } else {
-      console.log("is new");
-
+  async (subreddit:string) => {
+  console.log(subreddit)
       const response = await fetchImageData(subreddit, "");
-      return { isNewSubreddit: true, data: response };
-    }
+     
+      return response;
+    
   }
 );
+
+
 export const redditImagesSlice = createSlice({
   name: "redditImages",
   initialState: {
@@ -56,27 +48,21 @@ export const redditImagesSlice = createSlice({
     },
     addToAfterArray(state, action) {
       state.afterArray.push(action.payload);
-    }
+    },
+    addSubreddit(state, action) {
+        state.currentSubreddit = action.payload;
+    },
+    
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImages.fulfilled, (state, action) => {
       const { images, after, errorMessage, subredditId, subreddit } =
-        action.payload.data;
-      const { isNewSubreddit } = action.payload;
+        action.payload;
+     
 
       const hasImages = images.length > 0;
       
-      const addHistory = () => {
-        if (state.history.includes(subreddit)) return;
-
-        if (state.history.length <= 50) {
-          state.history.unshift(subreddit);
-        } else {
-          state.history.pop();
-          state.history.unshift(subreddit);
-        }
-        storeItem("history", state.history);
-      };
+  
 
       const clearImages = () => {
         state.images = [];
@@ -87,10 +73,7 @@ export const redditImagesSlice = createSlice({
         state.afterArray = [];
       };
 
-      if (isNewSubreddit) {
-        addHistory();
-        clearImages();
-      }
+    
 
       state.currentSubreddit = subreddit;
       state.currentSubredditId = subredditId;
@@ -100,7 +83,8 @@ export const redditImagesSlice = createSlice({
       }
 
       const imageArray: ImageObject[] = [];
-
+      const justImages: ImageObject[] = [];
+      const gifs: ImageObject[] = [];
       state.after = after;
       if (hasImages) {
         images.forEach((image: ImageObject) => {
@@ -109,23 +93,34 @@ export const redditImagesSlice = createSlice({
           const preview = image.thumbnail;
 
           if (imageReg.test(url)) {
-            state.images.push(image);
+            
+            
             imageArray.push(image);
+            justImages.push(image);
           }
           if (image.url.endsWith(".gif")) {
-            state.gifs.push(image);
+            
             imageArray.push(image);
+            gifs.push(image);
           }
         });
 
-        state.allImages = [...state.allImages, ...imageArray];
-        state.imagePages.push(imageArray);
+      
       }
+      state.images = [];
+      state.images.push(...justImages);
+      
+      state.gifs.push(...gifs);
+      
+        state.allImages.push(...imageArray);
+    
+       
+      
     });
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addHistoryItems, addToAfterArray } = redditImagesSlice.actions;
+export const { addHistoryItems, addToAfterArray, addSubreddit } = redditImagesSlice.actions;
 
 export default redditImagesSlice.reducer;
