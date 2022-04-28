@@ -13,7 +13,7 @@ interface redditImagesProps {
 export const fetchImages = createAsyncThunk(
   "reddit/fetchImages",
   async (subreddit:string) => {
-  console.log(subreddit)
+
       const response = await fetchImageData(subreddit, "");
      
       return response;
@@ -37,6 +37,7 @@ export const redditImagesSlice = createSlice({
     currentSubreddit: "",
     currentSubredditId: "",
     fetchingImages: false,
+    searching: false,
   } as RedditImagesState,
   reducers: {
     addHistoryItems(state) {
@@ -50,8 +51,15 @@ export const redditImagesSlice = createSlice({
       state.afterArray.push(action.payload);
     },
     addSubreddit(state, action) {
+      if(state.currentSubreddit != action.payload) {
+        state.searching = true;
         state.currentSubreddit = action.payload;
+      }
+        
     },
+    setSearhing(state, action) {
+      state.searching = action.payload;
+    }
     
   },
   extraReducers: (builder) => {
@@ -61,8 +69,7 @@ export const redditImagesSlice = createSlice({
      
 
       const hasImages = images.length > 0;
-      
-  
+
 
       const clearImages = () => {
         state.images = [];
@@ -72,6 +79,14 @@ export const redditImagesSlice = createSlice({
         state.imagePages = [];
         state.afterArray = [];
       };
+
+     
+        if (!state.history.includes(subreddit)) {
+          state.history.unshift(subreddit);
+        
+          storeItem("history", state.history);
+        }
+
 
     
 
@@ -113,6 +128,7 @@ export const redditImagesSlice = createSlice({
       state.gifs.push(...gifs);
       
         state.allImages.push(...imageArray);
+        state.searching = false;
     
        
       
@@ -121,6 +137,6 @@ export const redditImagesSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addHistoryItems, addToAfterArray, addSubreddit } = redditImagesSlice.actions;
+export const { addHistoryItems, addToAfterArray, addSubreddit, setSearhing } = redditImagesSlice.actions;
 
 export default redditImagesSlice.reducer;

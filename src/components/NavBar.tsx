@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import "../css/nav.css";
 
-import { fetchImages } from "../redux/redditImagesSlice";
+import { addSubreddit } from "../redux/redditImagesSlice";
 import { useAppDispatch } from "../redux/reduxHooks";
 function NavBar() {
   const [inputValue, setInputValue] = useState<string>('')
@@ -23,8 +23,10 @@ function NavBar() {
 
   const searchReddit = (e:FormEvent) => {
     e.preventDefault()
+    
     const subreddit = `${inputValue.replace(' ', '')}`
-    dispatch(fetchImages(subreddit))
+   
+    dispatch(addSubreddit(subreddit));
     setInputValue("")
   }
   return (

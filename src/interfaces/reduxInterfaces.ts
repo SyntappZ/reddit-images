@@ -25,5 +25,6 @@ export interface RedditImagesState {
   currentSubreddit: string;
   currentSubredditId: string;
   fetchingImages: boolean;
+  searching: boolean;
 }
 

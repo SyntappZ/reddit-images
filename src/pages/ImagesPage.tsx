@@ -3,14 +3,15 @@ import ImageGrid from "../components/ImageGrid";
 import "../css/imagesPage.css";
 
 import { useAppSelector, useAppDispatch } from "../redux/reduxHooks";
-import { fetchImages, addSubreddit } from "../redux/redditImagesSlice";
+import { fetchImages, addSubreddit, setSearhing } from "../redux/redditImagesSlice";
 
 const ImagesPage:FC = () => {
-  const { images, currentSubreddit, history } = useAppSelector(
+  const { images, currentSubreddit, history, searching } = useAppSelector(
     (state) => state.redditImages
   );
 
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  
+ 
   const dispatch = useAppDispatch();
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -21,9 +22,12 @@ const ImagesPage:FC = () => {
   }, []);
 
   useEffect(() => {
-    if(currentSubreddit) {
+
+    if(currentSubreddit && searching) {
+      console.log(currentSubreddit)
       fetchSomeImages(currentSubreddit)
     }
+    
 
   }, [currentSubreddit])
 
@@ -33,6 +37,7 @@ const ImagesPage:FC = () => {
       sub: subreddit
     }
     dispatch(fetchImages(subreddit));
+    dispatch(setSearhing(false))
   }
 
   const sendItem = (item: string) => {
